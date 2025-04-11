@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models\Todo;
 
 use App\Enum\ItemStatus;
@@ -25,7 +24,7 @@ class Item extends Model
      * @var array
      */
     protected $casts = [
-        'status'   => ItemStatus::class
+        'status'   => ItemStatus::class,
     ];
 
     /**

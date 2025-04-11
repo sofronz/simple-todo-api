@@ -1,21 +1,20 @@
 <?php
-
 namespace App\Http\Controllers\Api\Todo;
 
+use Illuminate\Http\Request;
 use App\Builders\Todo\TodoQuery;
+use App\Interfaces\TodoInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Todo\ListRequest;
 use App\Http\Resources\Todo\ListResource;
-use App\Interfaces\TodoInterface;
-use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(Request $request)

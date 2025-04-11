@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -16,7 +15,7 @@ class UserResource extends JsonResource
     {
         return [
             'username' => $this->username,
-            'email' => $this->email,
+            'email'    => $this->email,
         ];
     }
 }

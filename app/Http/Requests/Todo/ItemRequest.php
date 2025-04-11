@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\Todo;
 
 use App\Enum\ItemStatus;
@@ -12,7 +11,7 @@ class ItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +22,7 @@ class ItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'name'        => 'required',
             'description' => 'required',
         ];
     }
@@ -31,9 +30,9 @@ class ItemRequest extends FormRequest
     public function fieldInputs()
     {
         return [
-            'name' => $this->name,
+            'name'        => $this->name,
             'description' => $this->description,
-            'status' => ItemStatus::ONGOING,
+            'status'      => ItemStatus::ONGOING,
         ];
     }
 }

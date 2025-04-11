@@ -1,24 +1,23 @@
 <?php
-
 namespace App\Http\Controllers\Api\Todo;
 
 use App\Enum\ItemStatus;
+use Illuminate\Http\Request;
+use App\Interfaces\TodoInterface;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rules\Enum;
 use App\Http\Requests\Todo\ItemRequest;
 use App\Http\Resources\Todo\ItemResource;
 use App\Http\Resources\Todo\ListResource;
-use App\Interfaces\TodoInterface;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Enum;
 
 class ItemController extends Controller
 {
     /**
      * Store a newly created resource in storage.
-     * 
+     *
      * @param ItemRequest $request
      * @param int $list_id
-     * 
+     *
      * @return ListResource
      */
     public function store(ItemRequest $request, int $list_id)
@@ -28,7 +27,7 @@ class ItemController extends Controller
         $todo->items()->create(
             array_merge(
                 [
-                    'list_id' => $todo->id
+                    'list_id' => $todo->id,
                 ],
                 $data
             )
@@ -39,15 +38,15 @@ class ItemController extends Controller
 
     /**
      * Display the specified resource.
-     * 
+     *
      * @param int $list_id
      * @param int $id
-     * 
+     *
      * @return ItemResource
      */
     public function show(int $list_id, int $id)
     {
-        $todo = app(TodoInterface::class)->findTodo('id', $list_id);
+        $todo     = app(TodoInterface::class)->findTodo('id', $list_id);
         $todoItem = $todo->items()->where('id', $id)->first();
 
         return new ItemResource($todoItem);
@@ -55,33 +54,36 @@ class ItemController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * 
+     *
      * @param Request $request
      * @param int $id
-     * 
+     *
      * @return ListResource
      */
     public function update(Request $request, int $list_id, int $id)
     {
         $request->validate([
-            'name' => 'required',
+            'name'        => 'required',
             'description' => 'nullable',
-            'status' => ['required', new Enum(ItemStatus::class)]
+            'status'      => ['required', new Enum(ItemStatus::class)],
         ]);
 
-        $todo = app(TodoInterface::class)->findTodo('id', $list_id);
+        $todo     = app(TodoInterface::class)->findTodo('id', $list_id);
         $todoItem = $todo->items()->where('id', $id)->first();
-        $todoItem->update($request->input());
+        $todoItem->update([
+            'name'   => $request->name,
+            'status' => $request->status,
+        ]);
 
-        return new ItemResource($todo);
+        return new ItemResource($todoItem);
     }
 
     /**
      * Remove the specified resource from storage.
-     * 
+     *
      * @param int $list_id
      * @param int $id
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $list_id, int $id)

@@ -1,11 +1,11 @@
 <?php
 namespace App\Services;
 
-use App\Interfaces\todoInterface;
 use App\Models\Todo\ListTodo;
+use App\Interfaces\todoInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-class TodoService implements TodoInterface
+class TodoService implements todoInterface
 {
     /**
      * @var ListTodo

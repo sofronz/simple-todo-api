@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models\Todo;
 
 use App\Models\User;

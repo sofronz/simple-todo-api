@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,7 +32,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'username' => $this->username,
-            'email' => $this->email,
+            'email'    => $this->email,
             'password' => Hash::make($this->password),
         ];
     }
