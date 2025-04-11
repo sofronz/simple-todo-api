@@ -22,7 +22,20 @@ class ListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'nullable',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function fieldInputs()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'user_id' => $this->user()->id,
         ];
     }
 }

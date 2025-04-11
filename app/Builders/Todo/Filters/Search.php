@@ -1,5 +1,5 @@
 <?php
-namespace App\Builders\User\Filters;
+namespace App\Builders\Todo\Filters;
 
 use App\Interfaces\Builder\Filter;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,8 +15,7 @@ class Search implements Filter
     public static function apply(Builder $builder, $value): Builder
     {
         return $builder->where(function ($query) use ($value) {
-            $query->where('username', 'LIKE', '%' . $value . '%')
-                ->orWhere('email', 'LIKE', '%' . $value . '%');
+            $query->where('name', 'LIKE', '%' . $value . '%');
         });
     }
 }

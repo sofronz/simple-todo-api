@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Todo;
 
+use App\Enum\ItemStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ItemRequest extends FormRequest
@@ -22,7 +23,17 @@ class ItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required',
+            'description' => 'required',
+        ];
+    }
+
+    public function fieldInputs()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'status' => ItemStatus::ONGOING,
         ];
     }
 }
