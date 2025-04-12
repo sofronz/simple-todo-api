@@ -4,7 +4,7 @@ namespace App\Builders\Todo;
 use Illuminate\Http\Request;
 use App\Interfaces\Builder\Query;
 use App\Interfaces\TodoInterface;
-use App\Builders\User\Filters\Search;
+use App\Builders\Todo\Filters\Search;
 use Illuminate\Database\Eloquent\Builder;
 
 class TodoQuery implements Query
