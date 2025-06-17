@@ -11,11 +11,38 @@ use App\Http\Resources\Todo\ListResource;
 class ListController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/checklist",
+     *     summary="Get all checklists",
+     *     description="Returns a paginated list of checklists. Requires Bearer token.",
+     *     operationId="getChecklists",
+     *     tags={"Todo(Checklist)"},
+     *     security={{"sanctum":{}}},
      *
-     * @param Request $request
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         description="Search by checklist name or description",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="data", type="array",
+     *                 @OA\Items(ref="#/components/schemas/Checklist")
+     *             ),
+     *             @OA\Property(property="links", type="object"),
+     *             @OA\Property(property="meta", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function index(Request $request)
     {
@@ -25,11 +52,36 @@ class ListController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/checklist",
+     *     summary="Create a new checklist",
+     *     description="Create a new checklist with name and description. Requires Bearer token.",
+     *     operationId="createChecklist",
+     *     tags={"Todo(Checklist)"},
+     *     security={{"sanctum":{}}},
      *
-     * @param ListRequest $request
-     *
-     * @return ListResource
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "description"},
+     *             @OA\Property(property="name", type="string", example="Daily Tasks"),
+     *             @OA\Property(property="description", type="string", example="Tasks for daily routine")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Checklist created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Checklist")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function store(ListRequest $request)
     {
@@ -40,11 +92,36 @@ class ListController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/checklist/{id}/item",
+     *     summary="Get all checklist item",
+     *     description="Retrieve detailed information of a checklist by its ID. Requires Bearer token.",
+     *     operationId="getChecklistDetail",
+     *     tags={"Todo(ChecklistItem)"},
+     *     security={{"sanctum":{}}},
      *
-     * @param int $list_id
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the checklist",
+     *         required=true,
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
      *
-     * @return ListResource
+     *     @OA\Response(
+     *         response=200,
+     *         description="Checklist detail retrieved successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Checklist")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Checklist not found"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function show(int $list_id)
     {
@@ -54,12 +131,45 @@ class ListController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/checklist/{id}",
+     *     summary="Update checklist",
+     *     description="Update an existing checklist by ID. Requires Bearer token.",
+     *     operationId="updateChecklist",
+     *     tags={"Todo(Checklist)"},
+     *     security={{"sanctum":{}}},
      *
-     * @param ListRequest $request
-     * @param string $id
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Checklist ID",
+     *         required=true,
+     *         @OA\Schema(type="string", example="1")
+     *     ),
      *
-     * @return ListResource
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "description"},
+     *             @OA\Property(property="name", type="string", example="Updated checklist title"),
+     *             @OA\Property(property="description", type="string", example="Updated checklist description")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Checklist updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/ChecklistItem")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Checklist not found"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function update(ListRequest $request, string $id)
     {
@@ -70,11 +180,40 @@ class ListController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/checklist/{id}",
+     *     summary="Delete checklist",
+     *     description="Delete a checklist by its ID. Requires Bearer token.",
+     *     operationId="deleteChecklist",
+     *     tags={"Todo(Checklist)"},
+     *     security={{"sanctum":{}}},
      *
-     * @param string $id
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Checklist ID to delete",
+     *         required=true,
+     *         @OA\Schema(type="string", example="1")
+     *     ),
      *
-     * @return \Illuminate\Http\JsonResponse
+     *     @OA\Response(
+     *         response=200,
+     *         description="Checklist deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="message", type="string", example="Todo Deleted!")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Checklist not found"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
      */
     public function destroy(string $id)
     {

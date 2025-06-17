@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('checklist')->group(function () {
         Route::get('/', [ListController::class, 'index']);
         Route::post('/', [ListController::class, 'store']);
+        Route::put('/{id}', [ListController::class, 'update']);
         Route::delete('/{id}', [ListController::class, 'destroy']);
 
         Route::prefix('/{list_id}/item')->group(function () {

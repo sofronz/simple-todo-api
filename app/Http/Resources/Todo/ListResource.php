@@ -8,9 +8,22 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ListResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
+     * @OA\Schema(
+     *     schema="Checklist",
+     *     type="object",
+     *     @OA\Property(property="id", type="integer", example=1),
+     *     @OA\Property(property="name", type="string", example="Daily Tasks"),
+     *     @OA\Property(property="description", type="string", example="Tasks to complete daily"),
+     *     @OA\Property(
+     *         property="items",
+     *         type="array",
+     *         @OA\Items(ref="#/components/schemas/ChecklistItem")
+     *     ),
+     *     @OA\Property(
+     *         property="owner",
+     *         ref="#/components/schemas/User"
+     *     )
+     * )
      */
     public function toArray(Request $request): array
     {

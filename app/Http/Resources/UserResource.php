@@ -7,9 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserResource extends JsonResource
 {
     /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
+     * @OA\Schema(
+     *     schema="User",
+     *     type="object",
+     *     title="User",
+     *     @OA\Property(property="username", type="string", example="johndoe"),
+     *     @OA\Property(property="email", type="string", example="johndoe@example.com")
+     * )
      */
     public function toArray(Request $request): array
     {
