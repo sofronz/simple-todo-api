@@ -3,8 +3,6 @@
 
 This project is a simple RESTful API built with **Laravel 12**, focused on user authentication and checklist management. It provides features such as user registration and login, along with the ability to create and manage checklists and their items.
 
-For detailed API documentation, please refer to the [API Documentation](https://documenter.getpostman.com/view/10125362/2sB2cYcfnc).
-
 ## Features
 
 ### 🔐 Authentication
@@ -93,6 +91,18 @@ php artisan serve
 ```
 
 The API will be available at `http://localhost:8000`.
+
+## API Documentation
+
+For detailed API documentation, please refer to one of the following:
+
+- **Public Docs (Postman):**  
+  [API Documentation](https://documenter.getpostman.com/view/10125362/2sB2cYcfnc)
+
+- **Swagger Docs (Local):**  
+  Clone this project and run it locally, then access:  
+  `http://localhost:8000/api/documentation`
+
 
 ## License
 
